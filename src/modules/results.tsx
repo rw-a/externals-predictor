@@ -17,7 +17,7 @@ interface ResultsRowProps {
 
 function ResultsRow({code, rawScore, percentile, externalsScore}: ResultsRowProps) {
 	const subjectName = (code === "") ? "" : SUBJECTS[code];
-	const percentileDisplay = (percentile === "") ? "" : percentile.toFixed(2);
+	const percentileDisplay = (percentile === "") ? "" : (percentile * 100).toFixed(2); // convert percentile from decimal to percentage
 	const externalsScoreDisplay = (externalsScore === "") ? "" : externalsScore.toFixed(2);
 
 	return(
@@ -95,9 +95,9 @@ export default function ResultsTable({year, subjects, className}: ResultsTablePr
 				<thead>
 					<tr className='text-center'>
 						<th>Subject</th>
-						<th>Raw Score</th>
+						<th>Internals Score</th>
 						<th>Percentile</th>
-						<th>External Score</th>
+						<th>Externals Score</th>
 					</tr>
 				</thead>
 				<tbody>
