@@ -1,5 +1,6 @@
 import SUBJECTS_2021 from './../data/2021_subjects.json';
 import SUBJECTS_2022 from './../data/2022_subjects.json';
+import MATH_SCIENCE_SUBJECTS from './../data/math_science_subjects.json';
 
 import INTERALS_DATA from './../data/internals.json';
 import EXTERNALS_DATA from './../data/externals.json';
@@ -27,9 +28,17 @@ export function getPercentile(year: number, subject: SubjectCode, rawScore: Scor
 export function getExternalScore(year: number, subject: SubjectCode, percentile: number) {
     const data = EXTERNALS_DATA[String(year) as Year][subject];
 
+    const isMathScienceSubject = Object.hasOwn(MATH_SCIENCE_SUBJECTS, subject);
+    const maxScore = isMathScienceSubject ? 50 : 25;
+
     let externalScore = 0;
     for (const score of Object.keys(data)) {
         if (percentile > data[score]) {
+            // If nobody got a perfect score, give a range instead of defaulting to max
+            if (data[score] > 0.999999 && Number(score) < maxScore) {
+                return `≥${score}`;
+            }
+
             externalScore = Number(score);
         }
     }

@@ -12,13 +12,21 @@ interface ResultsRowProps {
 	code: SubjectCode | "",			// union allows for placeholder row
 	rawScore: Score | "‎",
 	percentile: Score,
-	externalsScore: Score,
+	externalsScore: Score | string,
 }
 
 function ResultsRow({code, rawScore, percentile, externalsScore}: ResultsRowProps) {
 	const subjectName = (code === "") ? "" : SUBJECTS[code];
 	const percentileDisplay = (percentile === "") ? "" : (percentile * 100).toFixed(2); // convert percentile from decimal to percentage
-	const externalsScoreDisplay = (externalsScore === "") ? "" : externalsScore.toFixed(2);
+
+	let externalsScoreDisplay: Score | string;
+	if (externalsScore === "") {
+		externalsScoreDisplay = ""
+	} else if (typeof(externalsScore) === 'string') {
+		externalsScoreDisplay = externalsScore;
+	} else {
+		externalsScoreDisplay = externalsScore.toFixed(2);
+	}
 
 	return(
 		<tr>
