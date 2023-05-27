@@ -2,10 +2,6 @@ import './../css/subjects.css';
 import React from 'react';
 import Select, { StylesConfig } from 'react-select';
 
-import Image from 'react-bootstrap/Image';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
-
 import { Subjects, SubjectCode, Score, 
 	OnScoreChange, OnSubjectDelete, OnSubjectAdd, OnClick, OnSubjectsSave } from '../types';
 import { getSubjects } from '../utility/data';
@@ -14,19 +10,6 @@ import SUBJECTS from '../data/all_subjects.json';
 import saveButtonImg from './../assets/save.svg';
 import saveButtonImgFilled from './../assets/save_filled.svg';
 
-
-interface SubjectNameProps {
-	name: string,
-	year: number
-}
-
-function SubjectName({name, year}: SubjectNameProps) {
-	return (
-		<span className="me-auto">
-			{name}
-		</span>
-	);
-}
 
 
 interface SubjectRawScoreProps {
@@ -86,7 +69,9 @@ function SubjectRow({code, year, score, onScoreChange, onSubjectDelete}: Subject
 	return (
 		<li className="SubjectRow">
 			<span className="DeleteSubject" onClick={handleSubjectDelete}></span>
-			<SubjectName name={SUBJECTS[code]} year={year}/>
+			<span className="me-auto">
+				{SUBJECTS[code]}
+			</span>
 			<SubjectRawScore code={code} score={score} onScoreChange={handleScoreChange} />
 		</li>
 	);
