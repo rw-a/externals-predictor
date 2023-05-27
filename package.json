@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "gh-pages": "^5.0.0",
-    "jsxgraph": "^1.5.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
