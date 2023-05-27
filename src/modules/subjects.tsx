@@ -6,6 +6,7 @@ import { Subjects, SubjectCode, Score,
 	OnScoreChange, OnSubjectDelete, OnSubjectAdd, OnClick, OnSubjectsSave } from '../types';
 import { getSubjects } from '../utility/data';
 import SUBJECTS from '../data/all_subjects.json';
+import MATH_SCIENCE_SUBJECTS from '../data/math_science_subjects.json';
 
 import saveButtonImg from './../assets/save.svg';
 import saveButtonImgFilled from './../assets/save_filled.svg';
@@ -19,13 +20,16 @@ interface SubjectRawScoreProps {
 }
   
 function SubjectRawScore({score, code, onScoreChange}: SubjectRawScoreProps) {
+	const isMathScienceSubject = Object.hasOwn(MATH_SCIENCE_SUBJECTS, code);
+	const maxScore = isMathScienceSubject ? 50 : 75;
+
 	function handleScoreChange(event: React.FormEvent<HTMLInputElement> & {target: HTMLInputElement}) {
 		if (!event.target) return;
 
 		if (event.target.value) {
 			// only allow integer values between 0 and 100
 			let score = Math.round(Number(event.target.value));
-			if (score > 100) {
+			if (score > maxScore) {
 				return;
 			} else if (score < 0) {
 				score = Math.abs(score);
@@ -35,13 +39,13 @@ function SubjectRawScore({score, code, onScoreChange}: SubjectRawScoreProps) {
 			onScoreChange("");  // allow blank values 
 		}
 	}
-
+	
 	return (
 		<input 
 			type="number" 
 			min="0" 
-			max="100"
-			title={`${SUBJECTS[code]} Raw Score`}
+			max={String(maxScore)}
+			title={`${SUBJECTS[code]} Internals Score`}
 			value={score} 
 			onChange={handleScoreChange}>
 		</input>
@@ -57,7 +61,7 @@ interface SubjectRowProps {
 	onSubjectDelete: OnSubjectDelete,
 }
 
-function SubjectRow({code, year, score, onScoreChange, onSubjectDelete}: SubjectRowProps) {
+function SubjectRow({code, score, onScoreChange, onSubjectDelete}: SubjectRowProps) {
 	function handleScoreChange(score: Score) {
 		onScoreChange(score, code);
 	}
@@ -92,11 +96,7 @@ function SubjectSelector({subjects, year, onSubjectAdd}: SubjectSelectorProps) {
 
 		// normal filter stuff
 		if (input) {
-			if (candidate.label.toLowerCase().includes(input.toLowerCase()))
-				return true;
-			else {
-				return false;
-			}
+			return candidate.label.toLowerCase().includes(input.toLowerCase());
 		} else {
 			// if no input, allow everything
 			return true;
@@ -172,7 +172,8 @@ interface SaveButtonProps {
 function SaveButton({saved, onClick, className}: SaveButtonProps) {
 	const imgSrc = (saved) ? saveButtonImgFilled : saveButtonImg;
 	return (
-		<img src={imgSrc} id="save_img" title={(saved) ? "Subjects Saved!" : "Save Subjects"} alt="Save Subjects" onClick={onClick} 
+		<img src={imgSrc} id="save_img" title={(saved) ? "Subjects Saved!" : "Save Subjects"} 
+			alt="Save Subjects" onClick={onClick} 
 			className={className}></img>
 	);
 }
