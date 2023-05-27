@@ -73,14 +73,14 @@ export default function Calculator() {
 
 	return (
 		<div id="content">
-			<h2>ATAR Calculator QLD/QCE</h2>
+			<h2>External Exam Predictor QLD/QCE</h2>
 			<div className="d-flex flex-column flex-md-row justify-content-between my-2">
 				<p className='text-small fst-italic me-1 mb-2 mb-md-1'>
-					ATAR Calculator and Subject Scaling Grapher for Queensland (QCE system). 
-					Neither QTAC nor QCAA endorse or are affiliated with this website. 
-					Scaling changes every year, so use at your own risk! 
-					If you would like to contribute to this calculator, 
-					please visit <a href="https://forms.gle/Hwat7MJtwU35q1Gj8">here.</a>
+					Externals Predictor for Queensland (QCE system). 
+					Enter your internal results and this will attempt to predict what score 
+					you will get in the externals by mapping your percentile.
+					QCAA neither endorses nor is affiliated with this website. 
+					Nobody can perfectly predict the future perfectly, so use at your own risk! 
 				</p>
 				<YearSelector onYearSelect={handleYearSelect}></YearSelector>
 			</div>	
