@@ -1,0 +1,41 @@
+:root {
+    --text-small: 0.85rem;
+    --text-tiny: 0.70rem;
+}
+
+#content {
+    max-width: 720px;
+    margin: auto;
+    padding: 0.75rem;
+}
+
+p {
+    margin-bottom: 0.25rem;
+}
+
+.text-small {
+    font-size: var(--text-small);
+}
+
+.button-small {
+    font-size: var(--text-small);
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.help-icon {
+    height: 0.8125rem;
+    width: 0.8125rem;
+    opacity: 0.7;
+    vertical-align: top;
+}
+
+.help-icon:hover {
+    opacity: 1;
+}
+
+#section-dropdown {
+    padding: 0rem;
+}

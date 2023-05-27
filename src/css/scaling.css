@@ -1,0 +1,14 @@
+div.JXGtext {
+    line-height: 0.85rem;
+}
+
+@media only screen and (max-width: 576px) {
+    #jsxlegend, #jsxgraph_navigationbar {
+        opacity: 1;
+        transition: opacity 0.5s;
+    }
+    .mobileHidden {
+        opacity: 0 !important;
+        transition: opacity 0.5s;
+    }
+}
