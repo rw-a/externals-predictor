@@ -11,7 +11,6 @@ import { Subjects, SubjectCode, Score,
 import { getSubjects } from '../utility/data';
 import SUBJECTS from '../data/all_subjects.json';
 
-import helpButtonImg from './../assets/help.svg';
 import saveButtonImg from './../assets/save.svg';
 import saveButtonImgFilled from './../assets/save_filled.svg';
 
@@ -25,15 +24,6 @@ function SubjectName({name, year}: SubjectNameProps) {
 	return (
 		<span className="me-auto">
 			{name}
-			{
-				(name.endsWith("[Accelerated]")) ? 
-					<OverlayTrigger placement="top" overlay={
-						<Tooltip>If you completed the subject a year early. 
-							Uses the scaling of the previous year (i.e. {Number(year) - 1})</Tooltip>
-					}>
-						<Image className='help-icon' src={helpButtonImg} alt="Subject Tooltip"/>
-					</OverlayTrigger> : ""
-			}
 		</span>
 	);
 }

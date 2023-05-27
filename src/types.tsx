@@ -2,7 +2,6 @@ import SUBJECTS from './data/all_subjects.json';
 
 
 /* App */
-export type Tabs = "scaling" | "results";
 export type Score = number | "";
 
 export type SubjectCode = keyof typeof SUBJECTS;
@@ -20,13 +19,4 @@ export type OnClick = () => void;
 
 
 /* Results */
-export type ScalingData = {
-    [key in SubjectCode]: {
-        "a": number;
-        "b": number;
-    };
-};
-
-export interface AtarData {
-    [key: string]: number
-}
+export type Year = "2021" | "2022";
