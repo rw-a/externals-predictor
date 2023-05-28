@@ -4,7 +4,14 @@ import SUBJECTS_2022 from './../data/2022_subjects.json';
 import INTERALS_DATA from './../data/internals.json';
 import EXTERNALS_DATA from './../data/externals.json';
 
+import MATH_SCIENCE_SUBJECTS from '../data/math_science_subjects.json';
+
 import { ExternalScore, Percentile, Score, SubjectCode, Year } from '../types';
+
+
+export function isMathScienceSubject(SubjectCode: SubjectCode) {
+    return Object.hasOwn(MATH_SCIENCE_SUBJECTS, SubjectCode);
+}
 
 
 export function getSubjects(year: number) {

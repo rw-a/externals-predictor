@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 
 import { SubjectCode, Subjects, Score, Percentile, ExternalScore } from '../types';
 import SUBJECTS from '../data/all_subjects.json';
-import { getExternalScore, getPercentile } from '../utility/data';
+import { getExternalScore, getPercentile, isMathScienceSubject } from '../utility/data';
 
 
 
@@ -17,8 +17,17 @@ interface ResultsRowProps {
 
 function ResultsRow({subjectCode, internalScore, percentile, externalsScore}: ResultsRowProps) {
 	const subjectName = (subjectCode === "") ? "" : SUBJECTS[subjectCode];
+
+	let internalScoreDisplay = String(internalScore);
+	if (subjectCode && internalScore) {
+		if (isMathScienceSubject(subjectCode)) {
+			internalScoreDisplay = `${internalScore} / 50`;
+		} else {
+			internalScoreDisplay = `${internalScore} / 75`;
+		}
+	}
 	
-	let percentileDisplay;
+	let percentileDisplay = "";
 	if (percentile.isEmpty) {
 		percentileDisplay = "";
 	} else if (percentile.isMax) {
@@ -27,19 +36,23 @@ function ResultsRow({subjectCode, internalScore, percentile, externalsScore}: Re
 		percentileDisplay = (percentile.number * 100).toFixed(2);
 	}
 
-	let externalsScoreDisplay;
+	let externalsScoreDisplay = "";
 	if (externalsScore.isEmpty) {
 		externalsScoreDisplay = "";
 	} else if (externalsScore.isMax) {
-		externalsScoreDisplay = `≥${externalsScore.number.toFixed(2)}`;
+		if (subjectCode) {
+			externalsScoreDisplay = `${externalsScore.number}-${isMathScienceSubject(subjectCode) ? 50 : 25}`;
+		}
 	} else {
-		externalsScoreDisplay = externalsScore.number.toFixed(2);
+		if (subjectCode) {
+			externalsScoreDisplay = `${externalsScore.number} / ${isMathScienceSubject(subjectCode) ? 50 : 25}`;
+		}
 	}
 
 	return(
 		<tr>
 			<td>{subjectName}</td>
-			<td className='text-center'>{internalScore}</td>
+			<td className='text-center'>{internalScoreDisplay}</td>
 			<td className='text-center'>{percentileDisplay}</td>
 			<td className='text-center'>{externalsScoreDisplay}</td>
 		</tr>

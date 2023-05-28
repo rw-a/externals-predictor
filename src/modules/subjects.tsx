@@ -4,9 +4,8 @@ import Select, { StylesConfig } from 'react-select';
 
 import { Subjects, SubjectCode, Score, 
 	OnScoreChange, OnSubjectDelete, OnSubjectAdd, OnClick, OnSubjectsSave } from '../types';
-import { getSubjects } from '../utility/data';
+import { getSubjects, isMathScienceSubject } from '../utility/data';
 import SUBJECTS from '../data/all_subjects.json';
-import MATH_SCIENCE_SUBJECTS from '../data/math_science_subjects.json';
 
 import saveButtonImg from './../assets/save.svg';
 import saveButtonImgFilled from './../assets/save_filled.svg';
@@ -20,8 +19,7 @@ interface SubjectRawScoreProps {
 }
   
 function SubjectRawScore({score, code, onScoreChange}: SubjectRawScoreProps) {
-	const isMathScienceSubject = Object.hasOwn(MATH_SCIENCE_SUBJECTS, code);
-	const maxScore = isMathScienceSubject ? 50 : 75;
+	const maxScore = isMathScienceSubject(code) ? 50 : 75;
 
 	function handleScoreChange(event: React.FormEvent<HTMLInputElement> & {target: HTMLInputElement}) {
 		if (!event.target) return;
