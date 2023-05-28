@@ -80,7 +80,7 @@ export default function Calculator() {
 					Enter your internal results and this will attempt to predict what score 
 					you will get in the externals by mapping your percentile.
 					QCAA neither endorses nor is affiliated with this website. 
-					Predicting the future perfectly is impossible, so use at your own risk! 
+					Based only on historical data, so use at your own risk! 
 				</p>
 				<YearSelector onYearSelect={handleYearSelect}></YearSelector>
 			</div>	
