@@ -11,6 +11,7 @@ interface ExportButtonProps {
 
 export default function ExportButton({subjects, year}: ExportButtonProps) {
     function handleExport() {
+        // Calculate the total scores to export
         const subjectCodes = Object.keys(subjects) as SubjectCode[];
         const subjectPercentiles = {};
         const subjectExternalScores = {};
@@ -25,8 +26,15 @@ export default function ExportButton({subjects, year}: ExportButtonProps) {
             subjectTotalScores[subjectCode] = subjects[subjectCode] + subjectExternalScores[subjectCode].number;
         }
 
+        // Copy the data to the atar calculator
         localStorage.setItem(ATAR_CALCULATOR_LOCAL_STORAGE_NAME, JSON.stringify(subjectTotalScores));
-        window.location.href = '/atar-calculator';
+
+        // Open the atar calculator in a new tab
+        Object.assign(document.createElement('a'), {
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            href: '/atar-calculator',
+          }).click();
     }
 
     return (
