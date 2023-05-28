@@ -2,36 +2,44 @@ import './../css/results.css';
 
 import Table from 'react-bootstrap/Table';
 
-import { SubjectCode, Subjects, Score } from '../types';
+import { SubjectCode, Subjects, Score, Percentile, ExternalScore } from '../types';
 import SUBJECTS from '../data/all_subjects.json';
 import { getExternalScore, getPercentile } from '../utility/data';
 
 
 
 interface ResultsRowProps {
-	code: SubjectCode | "",			// union allows for placeholder row
-	rawScore: Score | "‎",
-	percentile: Score,
-	externalsScore: Score | string,
+	subjectCode: SubjectCode | "",			// union allows for placeholder row
+	internalScore: Score | "‎",
+	percentile: Percentile,
+	externalsScore: ExternalScore,
 }
 
-function ResultsRow({code, rawScore, percentile, externalsScore}: ResultsRowProps) {
-	const subjectName = (code === "") ? "" : SUBJECTS[code];
-	const percentileDisplay = (percentile === "") ? "" : (percentile * 100).toFixed(2); // convert percentile from decimal to percentage
-
-	let externalsScoreDisplay: Score | string;
-	if (externalsScore === "") {
-		externalsScoreDisplay = ""
-	} else if (typeof(externalsScore) === 'string') {
-		externalsScoreDisplay = externalsScore;
+function ResultsRow({subjectCode, internalScore, percentile, externalsScore}: ResultsRowProps) {
+	const subjectName = (subjectCode === "") ? "" : SUBJECTS[subjectCode];
+	
+	let percentileDisplay;
+	if (percentile.isEmpty) {
+		percentileDisplay = "";
+	} else if (percentile.isMax) {
+		percentileDisplay = `≥${(percentile.number * 100).toFixed(2)}`;	// convert decimal to percentage
 	} else {
-		externalsScoreDisplay = externalsScore.toFixed(2);
+		percentileDisplay = (percentile.number * 100).toFixed(2);
+	}
+
+	let externalsScoreDisplay;
+	if (externalsScore.isEmpty) {
+		externalsScoreDisplay = "";
+	} else if (externalsScore.isMax) {
+		externalsScoreDisplay = `≥${externalsScore.number.toFixed(2)}`;
+	} else {
+		externalsScoreDisplay = externalsScore.number.toFixed(2);
 	}
 
 	return(
 		<tr>
 			<td>{subjectName}</td>
-			<td className='text-center'>{rawScore}</td>
+			<td className='text-center'>{internalScore}</td>
 			<td className='text-center'>{percentileDisplay}</td>
 			<td className='text-center'>{externalsScoreDisplay}</td>
 		</tr>
@@ -60,29 +68,21 @@ export default function ResultsTable({year, subjects, className}: ResultsTablePr
 	// sort the subjects
 	subjectCodes.sort((a, b) => {
 		// by predicted external score
-		return (subjectExternalScores[b] - subjectExternalScores[a]);
+		return (subjectExternalScores[b].number - subjectExternalScores[a].number);
 	});
 
 	// generate the rows of the table
 	const rows = [];
 	for (const subjectCode of subjectCodes) {
-		const rawScore = subjects[subjectCode];
-		let percentile: Score;
-		let externalsScore: Score;
-
-		if (rawScore === "") {
-			percentile = "";
-			externalsScore = "";
-		} else {
-			percentile = subjectPercentiles[subjectCode];
-			externalsScore = subjectExternalScores[subjectCode];
-		}
+		const internalScore = subjects[subjectCode];
+		const percentile = subjectPercentiles[subjectCode];
+		const externalsScore = subjectExternalScores[subjectCode];
 
 		rows.push(
 			<ResultsRow 
 				key={subjectCode} 
-				code={subjectCode} 
-				rawScore={rawScore} 
+				subjectCode={subjectCode} 
+				internalScore={internalScore} 
 				percentile={percentile}
 				externalsScore={externalsScore}
 			/>
@@ -92,7 +92,11 @@ export default function ResultsTable({year, subjects, className}: ResultsTablePr
 	// if no subjects added, add blank boxes as placeholders
 	if (rows.length < 1) {
 		rows.push(
-			<ResultsRow key="0" code={""} rawScore={"‎"} percentile={""} externalsScore={""}/>
+			<ResultsRow 
+				key="0" subjectCode={""} internalScore={"‎"} 
+				percentile={{number: 0, isMax: false, isEmpty: true}} 
+				externalsScore={{number: 0, isMax: false, isEmpty: true}}
+			/>
 		);
 	}
 

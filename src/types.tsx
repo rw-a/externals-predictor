@@ -20,3 +20,13 @@ export type OnClick = () => void;
 
 /* Results */
 export type Year = "2021" | "2022";
+export type Percentile = {
+	number: number,
+	isMax: boolean,
+	isEmpty: boolean,
+}
+export type ExternalScore = {
+	number: number,
+	isMax: boolean,
+	isEmpty: boolean,
+}

@@ -1,11 +1,10 @@
 import SUBJECTS_2021 from './../data/2021_subjects.json';
 import SUBJECTS_2022 from './../data/2022_subjects.json';
-import MATH_SCIENCE_SUBJECTS from './../data/math_science_subjects.json';
 
 import INTERALS_DATA from './../data/internals.json';
 import EXTERNALS_DATA from './../data/externals.json';
 
-import { Score, SubjectCode, Year } from '../types';
+import { ExternalScore, Percentile, Score, SubjectCode, Year } from '../types';
 
 
 export function getSubjects(year: number) {
@@ -21,26 +20,42 @@ export function getSubjects(year: number) {
 }
 
 
-export function getPercentile(year: number, subject: SubjectCode, rawScore: Score) {
-    return INTERALS_DATA[String(year) as Year][subject][rawScore];
+export function getPercentile(year: number, subject: SubjectCode, internalScore: Score): Percentile {
+    const percentile = {number: 0, isMax: false, isEmpty: false};   // percentile is a decimal value 0-1 not 0-100
+    if (internalScore === "") {
+        percentile.isEmpty = true;
+    } else if (internalScore === 0) {
+        // pass
+    } else {
+        const subjectData = INTERALS_DATA[String(year) as Year][subject];
+        percentile.number = subjectData[internalScore - 1];
+        if (internalScore + 1 >= Object.keys(subjectData).length) {     // if the internals score is the highest you can have for the subject
+            percentile.isMax = true;
+        }
+    }
+    return percentile;
 }
 
-export function getExternalScore(year: number, subject: SubjectCode, percentile: number) {
+export function getExternalScore(year: number, subject: SubjectCode, percentile: Percentile): ExternalScore {
+    const externalScore = {number: 0, isMax: false, isEmpty: false};
+
+    if (percentile.isEmpty) {
+        externalScore.isEmpty = true;
+        return externalScore;
+    }
+
     const data = EXTERNALS_DATA[String(year) as Year][subject];
 
-    const isMathScienceSubject = Object.hasOwn(MATH_SCIENCE_SUBJECTS, subject);
-    const maxScore = isMathScienceSubject ? 50 : 25;
-
-    let externalScore = 0;
     for (const score of Object.keys(data)) {
-        if (percentile > data[score]) {
-            // If nobody got a perfect score, give a range instead of defaulting to max
-            if (data[score] > 0.999999 && Number(score) < maxScore) {
-                return `≥${score}`;
-            }
-
-            externalScore = Number(score);
+        if (percentile.number > data[score]) {
+            externalScore.number = Number(score);
         }
+    }
+
+    // If the internal score was the max, return a range instead
+    if (percentile.isMax) {
+        externalScore.isMax = true;
+        return externalScore;
     }
 
     return externalScore;
