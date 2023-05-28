@@ -102,7 +102,7 @@ export default function Calculator() {
 				className="my-3"
 			/>
 			<div className='d-flex justify-content-center'>
-				<ExportButton subjects={subjects}></ExportButton>
+				<ExportButton subjects={subjects} year={year}></ExportButton>
 			</div>
 		</div>
 	);
