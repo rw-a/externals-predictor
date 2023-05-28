@@ -3,7 +3,7 @@ Visit the calculator website here: https://rw-a.github.io/externals-predictor/
 
 ## Disclaimer 
 - This service is provided “as is” and takes no liability for damages arising out of its use.
-- QCAA neither endorses or has any involvement in any material appearing on this website.
+- QCAA neither endorses nor has any involvement in any material appearing on this website.
 - Prediction relies on extrapolation and is based only on historical data, so use at your own risk.
 
 ## Usage
