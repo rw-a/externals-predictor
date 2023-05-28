@@ -9,6 +9,7 @@ import { getSubjects } from './utility/data';
 import SubjectsTable from './modules/subjects';
 import ResultsTable from './modules/results';
 
+const LOCAL_STORAGE_NAME = "externalsPredictorSubjects";
 
 function YearSelector({onYearSelect}: {onYearSelect: (selectedYear: number) => void}) {
 	return (
@@ -25,7 +26,7 @@ function YearSelector({onYearSelect}: {onYearSelect: (selectedYear: number) => v
 export default function Calculator() {
 	const [year, setYear] = useState(2022);
 	
-	const storedSubjects = localStorage.getItem("subjects");
+	const storedSubjects = localStorage.getItem(LOCAL_STORAGE_NAME);
 	const prevSubjects = (storedSubjects) ? JSON.parse(storedSubjects) : {} as Subjects;
 	const [savedSubjects, setSavedSubjects] = useState(prevSubjects);
 	const [subjects, setSubjects] = useState(prevSubjects);
@@ -50,7 +51,7 @@ export default function Calculator() {
 	}
 
 	useEffect(() => {
-		localStorage.setItem("subjects", JSON.stringify(savedSubjects));
+		localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(savedSubjects));
 	}, [savedSubjects]);
 
 	function handleSubjectsSave() {
