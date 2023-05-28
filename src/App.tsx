@@ -8,6 +8,7 @@ import { SubjectCode, Subjects, Score } from './types';
 import { getSubjects } from './utility/data';
 import SubjectsTable from './modules/subjects';
 import ResultsTable from './modules/results';
+import ExportButton from './modules/export'
 
 const LOCAL_STORAGE_NAME = "externalsPredictorSubjects";
 
@@ -100,6 +101,9 @@ export default function Calculator() {
 				year={year}
 				className="my-3"
 			/>
+			<div className='d-flex justify-content-center'>
+				<ExportButton subjects={subjects}></ExportButton>
+			</div>
 		</div>
 	);
 }
