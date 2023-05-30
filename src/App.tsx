@@ -78,7 +78,7 @@ export default function Calculator() {
 			<h2>Externals Predictor QLD/QCE</h2>
 			<div className="d-flex flex-column flex-md-row justify-content-between my-2">
 				<p className='text-small fst-italic me-1 mb-2 mb-md-1'>
-					Predict your external exam marks based on your internal assessment results. 
+					Predicts your external exam marks based on your internal assessment results. 
 					Designed for Queensland (QCE system) using 2022 and 2021 data. 
 					QCAA neither endorses nor is affiliated with this website. 
 					Disclaimer: this assumes that you do as well as the 
@@ -104,6 +104,10 @@ export default function Calculator() {
 			<div className='d-flex justify-content-center'>
 				<ExportButton subjects={subjects} year={year}></ExportButton>
 			</div>
+			<p className='text-small text-center'>
+				Copies your data to the <a href='/atar-calculator'>ATAR Calculator</a>, 
+				using the lowest value of any ranges. 
+			</p>
 		</div>
 	);
 }
