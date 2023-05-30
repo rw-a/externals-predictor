@@ -81,7 +81,8 @@ export default function Calculator() {
 					Predict your external exam marks based on your internal assessment results. 
 					Designed for Queensland (QCE system) using 2022 and 2021 data. 
 					QCAA neither endorses nor is affiliated with this website. 
-					Based only on historical data, so use at your own risk! 
+					Disclaimer: this assumes that you do as well as the 
+					average person with the same internal score!
 				</p>
 				<YearSelector onYearSelect={handleYearSelect}></YearSelector>
 			</div>	
