@@ -1,4 +1,4 @@
-# External Exams Results Predictor for Queensland (QCE)
+# External Exams Score Predictor for Queensland (QCE)
 Visit the calculator website here: https://rw-a.github.io/externals-predictor/
 
 ## Disclaimer 
