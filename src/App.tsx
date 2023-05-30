@@ -105,7 +105,7 @@ export default function Calculator() {
 				<ExportButton subjects={subjects} year={year}></ExportButton>
 			</div>
 			<p className='text-small text-center'>
-				(C	opies your data to the <a href='/atar-calculator'>ATAR Calculator</a>, 
+				(Copies your data to the <a href='/atar-calculator'>ATAR Calculator</a>, 
 				using the lowest value of any ranges)
 			</p>
 		</div>
