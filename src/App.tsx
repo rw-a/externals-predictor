@@ -75,12 +75,11 @@ export default function Calculator() {
 
 	return (
 		<div id="content">
-			<h2>External Exam Predictor QLD/QCE</h2>
+			<h2>Externals Predictor QLD/QCE</h2>
 			<div className="d-flex flex-column flex-md-row justify-content-between my-2">
 				<p className='text-small fst-italic me-1 mb-2 mb-md-1'>
-					Externals Predictor for Queensland (QCE system). 
-					Enter your internal results and this will attempt to predict what score 
-					you will get in the externals by mapping your percentile.
+					Predict your external exam marks based on your internal assessment results. 
+					Designed for Queensland (QCE system) using 2022 and 2021 data. 
 					QCAA neither endorses nor is affiliated with this website. 
 					Based only on historical data, so use at your own risk! 
 				</p>
